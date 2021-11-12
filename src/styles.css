@@ -4,40 +4,16 @@
 @tailwind utilities;
 
 :root {
-  /* The intrinsic width of the underline stroke (in pixels). This is 
-   * the same as the height of the cap images. Don't specify the
-   * units! This is because of some of the calculations we do later on. */
-  --underline-intrinsic-width: 14;
-
-  /* The actual width of the underline stroke we want to render (in pixels).
-   * You can modify this, and the sizing and positioning should be calculated
-   * accordingly. Again, Don't specify the units! */
-  --underline-width: 18;
-
-  /* The colour used to draw the underline. It should match the colour
-   * used in the cap images... unfortunately we can't modify the SVG
-   * fill via CSS because it's a background image. */
+  --underline-intrinsic-width: 30;
+  --underline-width: 30;
   --underline-color: #EB2D3E;
-
-  /* We need to know the width of the cap images so that we
-   * can position everything on the x axis accordingly. */
   --underline-cap-width: 0px;
-
-  /* The border is positioned relative to the bottom of the line.
-   * We can move it upwards a little to create an overlap effect. */
-  --underline-offset-y: -3px;
-
-  /* The padding to add to the x axis. By default, the caps would be
-   * aligned with the beginning and end of the line. */
-  --underline-padding-x: 0.12em;
-
-  /* The cap images to use that form the left and right rounded
-   * shape. I guess these could be any shape, they don't
-   * necessarily have to be round 🙂.
-   */
+  --underline-offset-y: 0.5em;
+  --underline-padding-x: 0.1em;
   --cap-image-left: none;
   --cap-image-right: none;
 }
+
 
 @responsive {
   .h-25vh {
@@ -63,38 +39,20 @@ p span {
   @apply flex flex-col relative px-8 md:pl-32 py-20 md:pr-32;
 }
 
+
 /* title base */
 
 .title strong {
   display: inline;
-  --underline-width-scale: calc(
-    var(--underline-width) / var(--underline-intrinsic-width)
-  );
-  padding: 0
-    calc(
-      var(--underline-padding-x) +
-        calc(var(--underline-cap-width) * var(--underline-width-scale))
-    );
+  --underline-width-scale: 0;
+  padding: 0 calc(var(--underline-padding-x) + calc(var(--underline-cap-width) * var(--underline-width-scale)));
+  -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   background-repeat: no-repeat;
   background-image: linear-gradient(
-      180deg,
-      var(--underline-color),
-      var(--underline-color)
-    ),
-    var(--cap-image-left), var(--cap-image-right);
-  background-position-x: calc(
-      var(--underline-cap-width) * var(--underline-width-scale)
-    ),
-    0, 100%;
-  background-position-y: calc(100% - var(--underline-offset-y) * -1);
-  background-size: calc(
-        100% -
-          calc(var(--underline-cap-width) * var(--underline-width-scale) * 2)
-      )
-      calc(var(--underline-width) * 1px),
-    auto calc(var(--underline-width) * 1px),
-    auto calc(var(--underline-width) * 1px);
+180deg,var(--underline-color),var(--underline-color)),var(--cap-image-left),var(--cap-image-right);
+  background-size: 100% 0.35em;
+  background-position: 0em 85%;
 }
 
 .heading--2 {
